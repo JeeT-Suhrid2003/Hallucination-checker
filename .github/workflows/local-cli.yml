@@ -63,10 +63,22 @@ jobs:
           print("Overall recommendation: pass")
           PY
 
-      - name: Validate Kubernetes Manifest
-        uses: instrumenta/kubeval-action@master
-        with:
-          files: deployment.yml
+      - name: Execute Kubernetes Dry-Run Against Cluster
+        shell: bash
+        run: |
+          echo "☸️ [STAGE 2] Running Kubernetes dry-run validation against cluster..."
+          
+          # Configure kubectl with cluster credentials
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 -d > $HOME/.kube/config
+          
+          # Run dry-run against the actual cluster (not just syntax check)
+          if kubectl apply -f deployment.yml --dry-run=server --validate=true; then
+            echo "✅ Manifest is valid and can be deployed"
+          else
+            echo "❌ Manifest validation failed - see errors above"
+            exit 1
+          fi
 
       - name: Execute Docker Build Dry-Run
         shell: bash
