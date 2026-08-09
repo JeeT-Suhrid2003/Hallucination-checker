@@ -1,0 +1,16 @@
+[
+  {
+    "file": "C:\\Users\\suhri\\Documents\\coding\\pr_checker\\deployment.yml",
+    "hallucination_percent": 15,
+    "num_issues": 1,
+    "issues": [
+      {
+        "line_hint": "restart_policy",
+        "problem": "Kubernetes pod spec uses 'restartPolicy' (camelCase), not 'restart_policy' (snake_case). Furthermore, restartPolicy belongs under spec.template.spec, but it is entirely missing here while a docker-style key was hinted in the comment.",
+        "confidence": "high"
+      }
+    ],
+    "corrected_path": "corrected_output\\deployment.yml",
+    "recommendation": "recheck"
+  }
+]
