@@ -66,12 +66,9 @@ jobs:
       - name: Execute Local Kubernetes Dry-Run
         shell: bash
         run: |
-          echo "☸️ [STAGE 2] Running local Kubernetes validation..."
-          if ! command -v kubectl >/dev/null 2>&1; then
-            echo "kubectl is not available in this environment; skipping Kubernetes dry-run"
-            exit 0
-          fi
-          kubectl apply -f deployment.yml --dry-run=client --validate=false
+          echo "☸️ [STAGE 2] Validating Kubernetes manifest..."
+          pip install kubeval
+          kubeval deployment.yml
 
       - name: Execute Docker Build Dry-Run
         shell: bash
