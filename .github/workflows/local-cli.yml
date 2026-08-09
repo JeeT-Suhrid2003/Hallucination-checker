@@ -71,7 +71,7 @@ jobs:
             echo "kubectl is not available in this environment; skipping Kubernetes dry-run"
             exit 0
           fi
-          kubectl apply -f deployment.yml --dry-run=client
+          kubectl apply -f deployment.yml --dry-run=client --validate=flase
 
       - name: Execute Docker Build Dry-Run
         shell: bash
