@@ -95,13 +95,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Execute Kubernetes Dry-Run Against Cluster
-        shell: pwsh  # Use PowerShell instead of bash
+        shell: cmd
         run: |
-          echo "☸️ [STAGE 2] Running Kubernetes dry-run validation against cluster..."
-          
-          if (kubectl apply -f deployment.yml --dry-run=server --validate=true) {
-            echo "✅ Manifest is valid and can be deployed"
-          } else {
-            echo "❌ Manifest validation failed - see errors above"
-            exit 1
-          }
+          echo ☸️ [STAGE 2] Running Kubernetes dry-run validation against cluster...
+          kubectl apply -f deployment.yml --dry-run=server --validate=true
+          if %ERRORLEVEL% EQU 0 (
+            echo ✅ Manifest is valid and can be deployed
+          ) else (
+            echo ❌ Manifest validation failed
+            exit /b 1
+          )
