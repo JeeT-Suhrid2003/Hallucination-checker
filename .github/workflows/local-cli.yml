@@ -9,7 +9,7 @@ on:
 
 jobs:
   validate-and-dryrun:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
