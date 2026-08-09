@@ -63,12 +63,10 @@ jobs:
           print("Overall recommendation: pass")
           PY
 
-      - name: Execute Local Kubernetes Dry-Run
-        shell: bash
-        run: |
-          echo "☸️ [STAGE 2] Validating Kubernetes manifest..."
-          pip install kubeval
-          kubeval deployment.yml
+      - name: Validate Kubernetes Manifest
+        uses: instrumenta/kubeval-action@master
+        with:
+          files: deployment.yml
 
       - name: Execute Docker Build Dry-Run
         shell: bash
