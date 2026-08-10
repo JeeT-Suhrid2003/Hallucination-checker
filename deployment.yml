@@ -7,7 +7,7 @@ metadata:
 spec:
   replicas: 2
   # 👇 HALLUCINATED KEY: AI invented 'autoHealing' (Not a real K8s Deployment spec field)
-  # autoHealing: true 
+  autoHealing: true 
   selector:
     matchLabels:
       app: hello-world
@@ -17,7 +17,7 @@ spec:
         app: hello-world
     spec:
       # 👇 HALLUCINATED KEY: AI wrote 'restart_policy' (Docker syntax) instead of 'restartPolicy'
-      # restart_policy: Always 
+      restart_policy: Always 
       containers:
       - name: web
         image: hello-world-app:v1
