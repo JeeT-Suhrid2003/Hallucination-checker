@@ -111,7 +111,7 @@ jobs:
     name: Notify Slack on failure
     runs-on: ubuntu-latest
     needs: [validate-and-build, cluster-dryrun]
-    if: ${{ always() && (needs.validate-and-build.result == 'failure') || (needs.cluster-dryrun.result == 'failure') }}
+    if: ${{ always() && (needs.validate-and-build.result == 'failure' || needs.cluster-dryrun.result == 'failure') }}
     steps:
       - name: Post failure to Slack via webhook
         env:
