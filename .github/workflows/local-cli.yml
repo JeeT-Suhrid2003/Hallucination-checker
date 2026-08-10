@@ -107,4 +107,3 @@ jobs:
             echo "❌ Manifest validation failed - see errors above"
             exit 1
           fi
-          shell: C:\WINDOWS\system32\bash.EXE --noprofile --norc -e -o pipefail {0}
