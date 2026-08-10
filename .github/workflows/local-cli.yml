@@ -107,3 +107,21 @@ jobs:
             echo "❌ Manifest validation failed - see errors above"
             exit 1
           fi
+  notify-slack-on-failure:
+    name: Notify Slack on failure
+    runs-on: ubuntu-latest
+    needs: [validate-and-build, cluster-dryrun]
+    if: ${{ (needs.validate-and-build.result == 'failure') || (needs.cluster-dryrun.result == 'failure') }}
+    steps:
+      - name: Post failure to Slack via webhook
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK" ]; then
+            echo "SLACK_WEBHOOK not set; skipping Slack notification"
+            exit 0
+          fi
+
+          payload='{"text":"Pipeline failed for ${GITHUB_REPOSITORY}. Check run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"}'
+          echo "Posting notification to Slack..."
+          curl -s -X POST -H 'Content-type: application/json' --data "$payload" "$SLACK_WEBHOOK"
